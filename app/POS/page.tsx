@@ -368,7 +368,7 @@ export default function POSPage() {
       const htmlContent = modalRef.current.outerHTML;
   
       // Make a POST request to the API route
-      const response = await fetch('/app/api/generate-pdf', {
+      const response = await fetch('/api/generate-pdf', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -903,6 +903,7 @@ export default function POSPage() {
                     <SelectItem key="cash">Cash</SelectItem>
                     <SelectItem key="card">Card</SelectItem>
                     <SelectItem key="online">Online</SelectItem>
+                    <SelectItem key="cheque">Cheque</SelectItem>
                   </Select>
                 </div>
                 <Button onClick={handleCheckout} color="secondary" className="w-full">

@@ -61,7 +61,7 @@ export default function PurchaseOrderPage() {
   const [productAutocompleteList, setProductAutocompleteList] = useState<any[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [productCost, setProductCost] = useState<number | undefined>(0);
-  const [productQuantity, setProductQuantity] = useState<number|undefined>(0);
+  const [productQuantity, setProductQuantity] = useState<number>(0);
   const [reciptEntries, setReciptEntries] = useState<any[]>([]);
   const [totalCost, setTotalCost] = useState<number>(0);
   const [viewAddItem, setViewAddItem] = useState<string | boolean>(false);
@@ -139,7 +139,7 @@ export default function PurchaseOrderPage() {
   };
 
   const handleAddProductToReceipt = () => {
-    //  let productQuantity =0;
+    
     console.log("Button clicked, adding product to receipt");
     console.log(selectedProduct)
     console.log(productQuantity)

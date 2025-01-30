@@ -33,7 +33,10 @@ const API_ENPOINTS =  {
     DELETE_USER : `${BASE_URL}/api/delete-user`,
     UPDATE_USER_STATUS : `${BASE_URL}/api/update-user-status`,
     GET_USER_ROLE : `${BASE_URL}/api/get-user-role`,
-    SAVE_INVOICE : `${BASE_URL}/api/save-invoice`
+    SAVE_INVOICE : `${BASE_URL}/api/save-invoice`,
+    SALES_DAILY :  `${BASE_URL}/api/sales/by-date`,
+    SALES_MONTHLY :  `${BASE_URL}/api/sales/by-month`,
+    SALES_YEARLY : `${BASE_URL}/api/sales/by-year`,
 }
 
 

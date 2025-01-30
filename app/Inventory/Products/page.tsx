@@ -41,6 +41,7 @@ interface Product {
   price: number;
   image?: string;
   maxDiscount: number;
+  dicountAllowed : number;
 }
 
 // Define Category interface for type safety
@@ -71,6 +72,7 @@ export default function ProductPage() {
     cost: 0,
     price: 0,
     maxDiscount: 0,
+    showMaxDiscount : 0
   });
   const [selectedFile, setSelectedFile] = useState<File | null>(null); // Stores the selected file for image upload
   const [imagePreview, setImagePreview] = useState<string | null>(null); // Stores the preview of the selected image
@@ -241,6 +243,7 @@ export default function ProductPage() {
   
   // Function to open the edit modal with selected product details
   const handleEditViewModal = (product: Product) => {
+    console.log(product);
     setViewEditItem(true);
     setEditingProduct(product);
     setOriginalImage(product.image || null);
@@ -252,6 +255,7 @@ export default function ProductPage() {
       cost: product.cost,
       price: product.price,
       maxDiscount: product.maxDiscount,
+      showMaxDiscount : product.dicountAllowed
     });
     setImagePreview(product.image || null);
   };
@@ -290,6 +294,7 @@ export default function ProductPage() {
       cost: 0,
       price: 0,
       maxDiscount: 0,
+      showMaxDiscount : 0
     });
     setImagePreview(null);
     setSelectedFile(null);
@@ -318,29 +323,29 @@ export default function ProductPage() {
       </div>
 
       {/* Product Table */}
-      <div className="container absolute inset-25 w-full max-w-[1375px]">
+      <div className="container absolute inset-25 w-full max-w-[1800px]">
         <Table className="text-center w-full max-h-[700px]">
           <TableHeader className="sticky top-0 overflow-hidden w-full mb-4">
             <TableColumn className="p-4 w-1/6">SKU</TableColumn>
-            <TableColumn className="p-4 w-1/6">Product Image</TableColumn>
-            <TableColumn className="p-4 w-1/8">Product Name</TableColumn>
-            <TableColumn className="p-4 w-1/8">Category</TableColumn>
+            {/* <TableColumn className="p-4 w-1/6">Product Image</TableColumn> */}
+            <TableColumn className="p-4 w-1/6">Product Name</TableColumn>
+            <TableColumn className="p-4 w-1/6">Category</TableColumn>
             <TableColumn className="p-4 w-1/8">Quantity</TableColumn>
             <TableColumn className="p-4 w-1/8">Cost Price</TableColumn>
             <TableColumn className="p-4 w-1/8">Selling Price</TableColumn>
             <TableColumn className="p-4 w-1/8">Max Discount</TableColumn>
             <TableColumn className="p-4 w-1/8">Stock Status</TableColumn>
-            <TableColumn className="p-4 w-1/4" children={undefined}></TableColumn>
+            <TableColumn className="p-4 w-1/6" children={undefined}></TableColumn>
           </TableHeader>
           <TableBody className="overflow-y-auto">
             {products.map((product) => (
               <TableRow key={product.id}>
                 <TableCell>{product.sku}</TableCell>
-                <TableCell>{product.image ? (
+                {/* <TableCell>{product.image ? (
                   <Image radius="md" height={50} src={product.image} style={{ border: "1px solid #dee2e6" }} />
                 ) : (
                   <Badge color="default">No Image</Badge>
-                )}</TableCell>
+                )}</TableCell> */}
                 <TableCell>{product.productName}</TableCell>
                 <TableCell>{product.category}</TableCell>
                 <TableCell>{product.intQty}</TableCell>
@@ -358,7 +363,9 @@ export default function ProductPage() {
                 </TableCell>
                 <TableCell>
                   <div className="grid gap-4 grid-cols-2">
-                    <Button onClick={() => handleEditViewModal(product)} title="Edit Product" className="flex flex-wrap gap-1 items-center">
+                    <Button onClick={() => handleEditViewModal(product)
+        
+                    } title="Edit Product" className="flex flex-wrap gap-1 items-center">
                       <IconEdit />
                     </Button>
                     <Button color="secondary" onClick={() => hadleDeleteConfirm(product)} title="Delete Product" className="flex flex-wrap gap-1 items-center">
@@ -420,7 +427,51 @@ export default function ProductPage() {
 
       {/* Edit Product Modal */}
       <Modal isOpen={viewEditItem} onOpenChange={onOpenChange} onClose={() => setViewEditItem(false)}>
-        <ModalContent>
+      <ModalContent>
+          <ModalHeader className="flex flex-col gap-1">Edit Product</ModalHeader>
+          <ModalBody>
+            <Input label="Product Name" name="name" value={formValues.name} onChange={handleInputChange} />
+            <div className="flex flex-row space-x-4">
+              <div className="relative z-0 w-full mb-5">
+                <Select className="max-w-xs" label="Product Categories" 
+                 selectedKeys={[formValues.category]} onChange={handleCategoryChange}>
+                  {productCategories.map((productCat) => (
+                    <SelectItem key={productCat}
+                    >{productCat}</SelectItem>
+                  ))}
+                </Select>
+              </div>
+              <div className="relative z-0 w-full mb-5">
+                <Input type="number" label="Quantity" name="quantity" value={formValues.quantity.toString()} onChange={handleInputChange} />
+              </div>
+            </div>
+            <div className="flex flex-row space-x-4">
+              <div className="relative z-0 w-full mb-5">
+                <Input type="number" label="Cost" name="cost" value={formValues.cost.toString()} onChange={handleInputChange} />
+              </div>
+              <div className="relative z-0 w-full mb-5">
+                <Input type="number" label="Price" name="price" value={formValues.price.toString()} onChange={handleInputChange} />
+              </div>
+            </div>
+            <div className="flex flex-row space-x-4">
+              <div className="relative z-0 w-full mb-5">
+                <Switch color="secondary" checked={Boolean(formValues.showMaxDiscount)} onChange={() => setShowMaxDiscount((prev) => !prev)}>
+                  Max Discount
+                </Switch>
+              </div>
+              <div className="relative z-0 w-full mb-5">
+                {showMaxDiscount && <Input type="number" label="Max Discount" name="maxDiscount" value={formValues.maxDiscount.toString()} onChange={handleInputChange} />}
+              </div>
+            </div>
+            <Input type="file" onChange={handleFileChange} />
+            {imagePreview && <Image src={imagePreview} alt="Preview" />}
+          </ModalBody>
+          <ModalFooter>
+            <Button onClick={handleEditProduct}>Save</Button>
+            <Button color="secondary" onClick={() => setViewEditItem(false)}>Cancel</Button>
+          </ModalFooter>
+        </ModalContent>
+        {/* <ModalContent>
           <ModalHeader className="flex flex-col gap-1">Edit Product</ModalHeader>
           <ModalBody>
             <Input label="Product Code" name="sku" value={formValues.sku} onChange={handleInputChange} readOnly />
@@ -437,7 +488,7 @@ export default function ProductPage() {
             <Button onClick={handleEditProduct}>Update</Button>
             <Button color="secondary" onClick={() => setViewEditItem(false)}>Cancel</Button>
           </ModalFooter>
-        </ModalContent>
+        </ModalContent> */}
       </Modal>
 
       {/* Delete Confirmation Modal */}

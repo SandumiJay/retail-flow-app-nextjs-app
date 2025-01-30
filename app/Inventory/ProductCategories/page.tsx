@@ -134,52 +134,33 @@ export default function ProductCategoriesPage() {
 
   return (
     <>
-      {/* Delete Confirmation Modal */}
-      <Modal isOpen={viewDelete} onClose={() => setViewDelete(false)}>
+    {/* Delete Confirmation Modal */}
+    <Modal isOpen={viewDelete} onClose={() => setViewDelete(false)}>
       <ModalContent>
         <ModalHeader>
-          <h3>Delete Product Category</h3>
+          <h3 style={{ fontSize: "1.5rem", textAlign: "center" }}>Delete Product Category</h3>
         </ModalHeader>
         <ModalBody>
-          <p>Are you sure you want to delete this product category?</p>
+          <p style={{ fontSize: "1rem", marginBottom: "1.5rem", textAlign: "center" }}>
+            Are you sure you want to delete this product category?
+          </p>
         </ModalBody>
-        <ModalFooter>
-          <Button color="danger" onClick={handleDeleteProceed}>
+        <ModalFooter style={{ justifyContent: "center", gap: "1rem" }}>
+          <Button color="danger" onClick={handleDeleteProceed} style={{ padding: "0.75rem 1.5rem" }}>
             Delete
           </Button>
-          <Button onClick={() => setViewDelete(false)}>Close</Button>
+          <Button onClick={() => setViewDelete(false)} style={{ padding: "0.75rem 1.5rem" }}>
+            Close
+          </Button>
         </ModalFooter>
-        </ModalContent>
-      </Modal>
-
-      {/* Add Product Category Modal */}
-      <Modal isOpen={viewAddItem} onClose={() => setViewAddItem(false)}>
-        <ModalContent>
-        <ModalHeader>
-          <h3>Add New Product Category</h3>
-        </ModalHeader>
-        <ModalBody>
-          <Input
-            required
-            fullWidth
-            label="Category Name"
-            placeholder="Electronics"
-            value={categoryName}
-            onChange={(e) => setCategoryName(e.target.value)}
-          />
-        </ModalBody>
-        <ModalFooter>
-          <Button onClick={handleAddProductCategory}>Create</Button>
-          <Button onClick={() => setViewAddItem(false)}>Close</Button>
-        </ModalFooter>
-        </ModalContent>
-      </Modal>
-
-      {/* Edit Product Category Modal */}
-      <Modal isOpen={viewEditItem} onClose={() => setViewEditItem(false)}>
+      </ModalContent>
+    </Modal>
+  
+    {/* Add Product Category Modal */}
+    <Modal isOpen={viewAddItem} onClose={() => setViewAddItem(false)}>
       <ModalContent>
         <ModalHeader>
-          <h3>Edit Product Category</h3>
+          <h3 style={{ fontSize: "1.5rem", textAlign: "center" }}>Add New Product Category</h3>
         </ModalHeader>
         <ModalBody>
           <Input
@@ -191,61 +172,86 @@ export default function ProductCategoriesPage() {
             onChange={(e) => setCategoryName(e.target.value)}
           />
         </ModalBody>
-        <ModalFooter>
-          <Button onClick={handleUpdateProductCategory}>Update</Button>
-          <Button onClick={() => {setViewEditItem(false);
-            setCategoryName('');}
-          }>Close</Button>
-        </ModalFooter>
-        </ModalContent>
-      </Modal>
-
-      {/* Main View */}
-      <div>
-        {/* <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <h4>Product Categories</h4>
-          <Button onClick={() => setViewAddItem(true)} icon={<IconSquareRoundedPlus />}>
-            Add
+        <ModalFooter style={{ justifyContent: "center", gap: "1rem" }}>
+          <Button onClick={handleAddProductCategory} style={{ padding: "0.75rem 1.5rem" }}>
+            Create
           </Button>
-        </div> */}
-
-<div
-                className="sticky top-0 overflow-hidden h-fit w-full items-center justify-between rounded-t-2xl bg-white px-4 pb-[20px] pt-4 shadow-2xl shadow-gray-100 dark:!bg-navy-700 dark:shadow-none"
-                >
-                <h1 className="text-3xl font-bold text-purple-800 dark:text-white">
-                Product Categories
-                </h1>
-                <button
-                    className=" absolute top-4 right-0 linear rounded-[20px] bg-purple-400 px-4 py-2 text-base font-medium text-brand-500 transition duration-200  hover:bg-purple-500 active:bg-purple-500 dark:bg-white/5 dark:text-white dark:hover:bg-white/10 dark:active:bg-white/20"
-                    onClick={() => { open;
-                      console.log("Opening Add Product Modal");
-                      setViewAddItem(true);
-                    }}
-               
-               >
-                    Add Product Categories
-                </button>
-                </div>
-        <Spacer y={1} />
-        <div>
-          <Table
-            aria-label="Product Categories Table"
-            style={{
-              height: "auto",
-              minWidth: "100%",
+          <Button onClick={() => setViewAddItem(false)} style={{ padding: "0.75rem 1.5rem" }}>
+            Close
+          </Button>
+        </ModalFooter>
+      </ModalContent>
+    </Modal>
+  
+    {/* Edit Product Category Modal */}
+    <Modal isOpen={viewEditItem} onClose={() => setViewEditItem(false)}>
+      <ModalContent>
+        <ModalHeader>
+          <h3 style={{ fontSize: "1.5rem", textAlign: "center" }}>Edit Product Category</h3>
+        </ModalHeader>
+        <ModalBody>
+          <Input
+            required
+            fullWidth
+            label="Category Name"
+            placeholder="Electronics"
+            value={categoryName}
+            onChange={(e) => setCategoryName(e.target.value)}
+          />
+        </ModalBody>
+        <ModalFooter style={{ justifyContent: "center", gap: "1rem" }}>
+          <Button onClick={handleUpdateProductCategory} style={{ padding: "0.75rem 1.5rem" }}>
+            Update
+          </Button>
+          <Button
+            onClick={() => {
+              setViewEditItem(false);
+              setCategoryName("");
             }}
+            style={{ padding: "0.75rem 1.5rem" }}
           >
-            <TableHeader>
-              <TableColumn style={{textAlign: "center" }}>
-                Product Category
-              </TableColumn>
-              <TableColumn style={{textAlign: "center" }}>Status</TableColumn>
-              <TableColumn children={undefined} />
-            </TableHeader>
-            <TableBody className="overflow-y-auto" >{rows}</TableBody>
-          </Table>
-        </div>
+            Close
+          </Button>
+        </ModalFooter>
+      </ModalContent>
+    </Modal>
+  
+    {/* Main View */}
+    <div>
+      <div
+        className="sticky top-0 overflow-hidden h-fit w-full flex items-center justify-between rounded-t-2xl bg-white px-4 pb-5 pt-4 shadow-2xl shadow-gray-100 dark:!bg-navy-700 dark:shadow-none"
+      >
+        <h1 className="text-3xl font-bold text-purple-800 dark:text-white">Product Categories</h1>
+        <button
+          className="absolute top-4 right-0 linear rounded-[20px] bg-purple-400 px-4 py-2 text-base font-medium text-brand-500 transition duration-200 hover:bg-purple-500 active:bg-purple-500 dark:bg-white/5 dark:text-white dark:hover:bg-white/10 dark:active:bg-white/20"
+          onClick={() => {
+            console.log("Opening Add Product Modal");
+            setViewAddItem(true);
+          }}
+        >
+          Add Product Categories
+        </button>
       </div>
-    </>
+      <Spacer y={1} />
+      <div>
+        <Table
+          aria-label="Product Categories Table"
+          style={{
+            height: "auto",
+            minWidth: "100%",
+          }}
+        >
+          <TableHeader>
+            <TableColumn style={{ textAlign: "center", fontSize: "1rem" }}>
+              Product Category
+            </TableColumn>
+            <TableColumn style={{ textAlign: "center", fontSize: "1rem" }}>Status</TableColumn>
+            <TableColumn children={undefined} />
+          </TableHeader>
+          <TableBody className="overflow-y-auto">{rows}</TableBody>
+        </Table>
+      </div>
+    </div>
+  </>
   );
 }
